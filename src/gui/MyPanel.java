@@ -26,7 +26,7 @@ public class MyPanel extends JPanel {
     // private double FRAME_SIZE;
 
     //static int GAME_UNITS;
-    private DirectedWeightedGraph graph;
+    public DirectedWeightedGraph graph;
 
     //constructor
     public MyPanel(DirectedWeightedGraph ans) {
@@ -70,11 +70,11 @@ public class MyPanel extends JPanel {
     }
 
     //draw the components edges and nodes(verticals)
-    public void paintComponent(Graphics g) {
+   public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //drawArrowLine(g, 20, 20, 200, 200, 30, 7);
         //drawLines(g);
-        drawEdges(g);
+        //drawEdges(g);
         drawNodes(g);
     }
 
@@ -94,7 +94,7 @@ public class MyPanel extends JPanel {
     }
 
     //draw the Edge by using arrow and lines
-    public void drawEdges(Graphics g) {
+   /* public void drawEdges(Graphics g) {
         Iterator<EdgeData> iter = graph.edgeIter();
         while (iter.hasNext()) {
             EdgeData edge = iter.next();
@@ -166,6 +166,8 @@ public class MyPanel extends JPanel {
         graph.addNode(new NodeDataImpl(key,newX+","+newY+",0"));
         repaint();
     }
+
+
 
     
 }

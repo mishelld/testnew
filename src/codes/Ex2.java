@@ -8,6 +8,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class Ex2 {
         //     }
         // } while (graphAlgo.getGraph() == null);
         // new MyFrame(graphAlgo);
-        runGUI("data/G1.json");
+        runGUI("data/G3.json");
 
 
 
@@ -69,7 +71,7 @@ public class Ex2 {
      */
     public static DirectedWeightedGraphAlgorithms getGrapgAlgo(String json_file) {
         DirectedWeightedGraph graph = getGrapg(json_file);
-        DirectedWeightedGraphAlgorithms graphAlgo = new MyDirectedWeightedGraphAlgorithmsImpl();
+        DirectedWeightedGraphAlgorithms graphAlgo = new DirectedWeightedGraphAlgorithmsImpl();
         graphAlgo.init(graph);
         return graphAlgo;
     }
@@ -80,9 +82,13 @@ public class Ex2 {
      * @param json_file - a json file (e.g., G1.json - G3.gson)
      */
     public static void runGUI(String json_file) {
+
         DirectedWeightedGraphAlgorithms graphAlgo = getGrapgAlgo(json_file);
         new MyFrame(graphAlgo);
+      //  new GUI((DirectedWeightedGraph) graphAlgo);
+
     }
+
 
     public static DirectedWeightedGraphImpl readGRaphFromJson(String json_file)
             throws FileNotFoundException, IOException, ParseException {

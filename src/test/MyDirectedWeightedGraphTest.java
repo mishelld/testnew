@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 public class MyDirectedWeightedGraphTest {
     DirectedWeightedGraph graph;
-    MyDirectedWeightedGraphAlgorithmsImpl algoGraph;
+    DirectedWeightedGraphAlgorithmsImpl algoGraph;
 
     MyDirectedWeightedGraphTest() {
         graph = Ex2.getGrapg("data/G1.json"); // enter here the path for G1 json
-        algoGraph = new MyDirectedWeightedGraphAlgorithmsImpl();
+        algoGraph = new DirectedWeightedGraphAlgorithmsImpl();
         algoGraph.init(graph);
     }
 
