@@ -1,15 +1,13 @@
 package codes;
 
 import api.*;
-import gui.*;
 
+import gui.Frame;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,7 +38,7 @@ public class Ex2 {
         //     }
         // } while (graphAlgo.getGraph() == null);
         // new MyFrame(graphAlgo);
-        runGUI("data/G3.json");
+        runGUI("data/G2.json");
 
 
 
@@ -84,7 +82,7 @@ public class Ex2 {
     public static void runGUI(String json_file) {
 
         DirectedWeightedGraphAlgorithms graphAlgo = getGrapgAlgo(json_file);
-        new MyFrame(graphAlgo);
+        new Frame(graphAlgo);
       //  new GUI((DirectedWeightedGraph) graphAlgo);
 
     }
