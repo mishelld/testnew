@@ -1,12 +1,14 @@
 package gui.pop;
 
-import javax.swing.*;
-
 import api.DirectedWeightedGraph;
 import api.NodeData;
 
-import java.awt.event.*;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GetNode extends JFrame implements ActionListener {
     private JTextField key;
@@ -61,7 +63,7 @@ public class GetNode extends JFrame implements ActionListener {
         }
     }
     
-    public void closeWindow() {
+    private void closeWindow() {
         // set the text of the label to the text of the field
         setVisible(false);
         try {

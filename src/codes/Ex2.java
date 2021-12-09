@@ -1,8 +1,9 @@
 package codes;
 
 import api.*;
+import codes.*;
+import gui.*;
 
-import gui.Frame;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,36 +13,24 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
 /**
  * This class is the main class for Ex2 - your implementation will be tested
  * using this class.
  */
 
 public class Ex2 {
-    public static String json_file;// = "data/G1.json";
+    // = "data/G1.json";
+
 
     public static void main(String[] args) {
-        // DirectedWeightedGraphAlgorithms graphAlgo = new MyDirectedWeightedGraphAlgorithms();
-
-        // //graphAlgo.init(getGrapg(json_file));
-        // do {
-        //     OpenScreen openScrean = new OpenScreen();
-        //     while (openScrean.isActive()|| openScrean.isVisible());
-        //     System.out.println(json_file);
-        //     try {
-        //         MyDirectedWeightedGraph graph = readGRaphFromJson(json_file);
-        //         graphAlgo.init(graph);
-        //     } catch (Exception e) {
-        //         String message = "File name not found :( \n Please try again:";
-        //         JOptionPane.showMessageDialog(new JFrame(), message, "File Error", JOptionPane.ERROR_MESSAGE);
-        //         e.printStackTrace();
-        //     }
-        // } while (graphAlgo.getGraph() == null);
-        // new MyFrame(graphAlgo);
-        runGUI("data/G2.json");
-
-
-
+        String json_file = "data/G3.json"; //= args[0];
+        runGUI(json_file);
     }
 
     /**
@@ -80,13 +69,9 @@ public class Ex2 {
      * @param json_file - a json file (e.g., G1.json - G3.gson)
      */
     public static void runGUI(String json_file) {
-
         DirectedWeightedGraphAlgorithms graphAlgo = getGrapgAlgo(json_file);
-        new Frame(graphAlgo);
-      //  new GUI((DirectedWeightedGraph) graphAlgo);
-
+        new MyFrame(graphAlgo);
     }
-
 
     public static DirectedWeightedGraphImpl readGRaphFromJson(String json_file)
             throws FileNotFoundException, IOException, ParseException {

@@ -1,12 +1,14 @@
 package gui.pop;
 
-import javax.swing.*;
-
 import api.DirectedWeightedGraph;
 import gui.MyPanel;
 
-import java.awt.event.*;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class AddNode extends JFrame implements ActionListener {
@@ -70,7 +72,7 @@ public class AddNode extends JFrame implements ActionListener {
         }
     }
 
-    public void closeWindow() {
+    private void closeWindow() {
         setVisible(false);
         try {
             int key = Integer.parseInt(inputKey.getText());

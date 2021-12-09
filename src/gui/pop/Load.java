@@ -1,6 +1,7 @@
 package gui.pop;
 
-import api.DirectedWeightedGraph;
+import api.DirectedWeightedGraphAlgorithms;
+import codes.Ex2;
 import gui.MyPanel;
 
 import javax.swing.*;
@@ -10,53 +11,31 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Connect extends JFrame implements ActionListener {
-    private JTextField inputSrc;
-    private JTextField inputDest;
-    private JTextField inputWeight;
+public class Load extends JFrame implements ActionListener {
+    private JTextField inputName;
     private JButton button;
-    private JLabel textSrc;
-    private JLabel textDest;
-    private JLabel textWeight;
+    private JLabel textName;
 
-    private DirectedWeightedGraph graph;
+    private DirectedWeightedGraphAlgorithms graphAlgo;
     private MyPanel panel;
 
     // default constructor
-    public Connect(DirectedWeightedGraph graph, MyPanel panel) {
+    public Load(DirectedWeightedGraphAlgorithms graphAlgo, MyPanel panel) {
         // create a new frame to store text field and button
-        super("Connect Nodes");
-        this.graph = graph;
+        super("Load New Graph");
+        this.graphAlgo = graphAlgo;
         this.panel = panel;
         // create a label to display text
-        textSrc = new JLabel("Src:");
-        textDest = new JLabel("Dest:");
-        textWeight = new JLabel("Weight:");
+        textName = new JLabel("Name Of The New Graph:");
         // create a new button
         button = new JButton("Enter");
         // addActionListener to button
         button.addActionListener(this);
         // create a object of JTextField with 16 columns
-        inputSrc = new JTextField(8);
-        inputSrc.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    inputDest.requestFocusInWindow();
-                }
-            }
-        });
-        inputDest = new JTextField(8);
-        inputDest.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    inputWeight.requestFocusInWindow();
-                }
-            }
-        });
-        inputWeight = new JTextField(8);
-        inputWeight.addKeyListener(new KeyAdapter() {
+
+        inputName = new JTextField(8);
+
+        inputName.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -68,12 +47,8 @@ public class Connect extends JFrame implements ActionListener {
         // create a panel to add buttons and textfield
         JPanel p = new JPanel();
         // add buttons and textfield to panel
-        p.add(textSrc);
-        p.add(inputSrc);
-        p.add(textDest);
-        p.add(inputDest);
-        p.add(textWeight);
-        p.add(inputWeight);
+        p.add(textName);
+        p.add(inputName);
         p.add(button);
 
         //p.setPreferredSize(new Dimension(125, 100));
@@ -91,20 +66,24 @@ public class Connect extends JFrame implements ActionListener {
     // if the button is pressed
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
-        if (s.equals("Enter")) {
+        ///if (s.equals("Enter")) {
             closeWindow();
-        }
+
     }
 
     private void closeWindow() {
         // set the text of the label to the text of the field
         setVisible(false);
         try {
-            int src = Integer.parseInt(inputSrc.getText());
-            int dest = Integer.parseInt(inputDest.getText());
-            double weight = Double.parseDouble(inputWeight.getText());
-            graph.connect(src, dest, weight);
+            if (!graphAlgo.load("data/G3.json")) {
+                String message = "The Graph Not Found :(";
+                JOptionPane.showMessageDialog(new JFrame(), message, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+
+            panel.init(Ex2.getGrapgAlgo("data/G1.json").getGraph());
             panel.repaint();
+
+
         }
         catch (Exception e) {
             String message = "Something Gets Wrong :(";

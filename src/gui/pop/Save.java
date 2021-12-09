@@ -1,7 +1,6 @@
 package gui.pop;
 
-import api.DirectedWeightedGraph;
-import gui.MyPanel;
+import api.DirectedWeightedGraphAlgorithms;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,53 +9,27 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Connect extends JFrame implements ActionListener {
-    private JTextField inputSrc;
-    private JTextField inputDest;
-    private JTextField inputWeight;
+public class Save extends JFrame implements ActionListener {
+    private JTextField inputName;
     private JButton button;
-    private JLabel textSrc;
-    private JLabel textDest;
-    private JLabel textWeight;
+    private JLabel textName;
 
-    private DirectedWeightedGraph graph;
-    private MyPanel panel;
+    private DirectedWeightedGraphAlgorithms graphAlgo;
 
     // default constructor
-    public Connect(DirectedWeightedGraph graph, MyPanel panel) {
+    public Save(DirectedWeightedGraphAlgorithms graphAlgo) {
         // create a new frame to store text field and button
-        super("Connect Nodes");
-        this.graph = graph;
-        this.panel = panel;
+        super("Save New Graph");
+        this.graphAlgo = graphAlgo;
         // create a label to display text
-        textSrc = new JLabel("Src:");
-        textDest = new JLabel("Dest:");
-        textWeight = new JLabel("Weight:");
+        textName = new JLabel("Name Of The New File:");
         // create a new button
         button = new JButton("Enter");
         // addActionListener to button
         button.addActionListener(this);
         // create a object of JTextField with 16 columns
-        inputSrc = new JTextField(8);
-        inputSrc.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    inputDest.requestFocusInWindow();
-                }
-            }
-        });
-        inputDest = new JTextField(8);
-        inputDest.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    inputWeight.requestFocusInWindow();
-                }
-            }
-        });
-        inputWeight = new JTextField(8);
-        inputWeight.addKeyListener(new KeyAdapter() {
+        inputName = new JTextField(8);
+        inputName.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -68,12 +41,8 @@ public class Connect extends JFrame implements ActionListener {
         // create a panel to add buttons and textfield
         JPanel p = new JPanel();
         // add buttons and textfield to panel
-        p.add(textSrc);
-        p.add(inputSrc);
-        p.add(textDest);
-        p.add(inputDest);
-        p.add(textWeight);
-        p.add(inputWeight);
+        p.add(textName);
+        p.add(inputName);
         p.add(button);
 
         //p.setPreferredSize(new Dimension(125, 100));
@@ -100,11 +69,15 @@ public class Connect extends JFrame implements ActionListener {
         // set the text of the label to the text of the field
         setVisible(false);
         try {
-            int src = Integer.parseInt(inputSrc.getText());
-            int dest = Integer.parseInt(inputDest.getText());
-            double weight = Double.parseDouble(inputWeight.getText());
-            graph.connect(src, dest, weight);
-            panel.repaint();
+            if (!graphAlgo.save(inputName.getText())) {
+                String message = "Faild To Save The Graph :(";
+                JOptionPane.showMessageDialog(new JFrame(), message, "Faild", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                String message = "Succeeded :)";
+                JOptionPane.showMessageDialog(new JFrame(), message, "Succeeded", JOptionPane.DEFAULT_OPTION);
+            }
+
         }
         catch (Exception e) {
             String message = "Something Gets Wrong :(";

@@ -1,13 +1,14 @@
 package gui.pop;
 
-import javax.swing.*;
-
 import api.DirectedWeightedGraph;
 import api.EdgeData;
-import api.NodeData;
 
-import java.awt.event.*;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GetEdge extends JFrame implements ActionListener {
     private JTextField inputSrc;
@@ -79,7 +80,7 @@ public class GetEdge extends JFrame implements ActionListener {
         }
     }
 
-    public void closeWindow() {
+    private void closeWindow() {
         // set the text of the label to the text of the field
         setVisible(false);
         try {

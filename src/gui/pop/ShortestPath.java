@@ -1,7 +1,7 @@
 package gui.pop;
 
-import api.DirectedWeightedGraph;
-import gui.MyPanel;
+import api.DirectedWeightedGraphAlgorithms;
+import api.NodeData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,29 +9,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
-public class Connect extends JFrame implements ActionListener {
+public class ShortestPath extends JFrame implements ActionListener {
     private JTextField inputSrc;
     private JTextField inputDest;
-    private JTextField inputWeight;
     private JButton button;
     private JLabel textSrc;
     private JLabel textDest;
-    private JLabel textWeight;
 
-    private DirectedWeightedGraph graph;
-    private MyPanel panel;
+    private DirectedWeightedGraphAlgorithms graphAlgo;
 
     // default constructor
-    public Connect(DirectedWeightedGraph graph, MyPanel panel) {
+    public ShortestPath(DirectedWeightedGraphAlgorithms graphAlgo) {
         // create a new frame to store text field and button
-        super("Connect Nodes");
-        this.graph = graph;
-        this.panel = panel;
+        super("Shortest Path Dist");
+        this.graphAlgo = graphAlgo;
         // create a label to display text
         textSrc = new JLabel("Src:");
         textDest = new JLabel("Dest:");
-        textWeight = new JLabel("Weight:");
         // create a new button
         button = new JButton("Enter");
         // addActionListener to button
@@ -51,15 +47,6 @@ public class Connect extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    inputWeight.requestFocusInWindow();
-                }
-            }
-        });
-        inputWeight = new JTextField(8);
-        inputWeight.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     closeWindow();
                 }
             }
@@ -72,11 +59,9 @@ public class Connect extends JFrame implements ActionListener {
         p.add(inputSrc);
         p.add(textDest);
         p.add(inputDest);
-        p.add(textWeight);
-        p.add(inputWeight);
         p.add(button);
 
-        //p.setPreferredSize(new Dimension(125, 100));
+        p.setPreferredSize(new Dimension(140, 100));
         // add panel to frame
         add(p);
 
@@ -102,11 +87,21 @@ public class Connect extends JFrame implements ActionListener {
         try {
             int src = Integer.parseInt(inputSrc.getText());
             int dest = Integer.parseInt(inputDest.getText());
-            double weight = Double.parseDouble(inputWeight.getText());
-            graph.connect(src, dest, weight);
-            panel.repaint();
+            List<NodeData> path = graphAlgo.shortestPath(src, dest);
+            String message;
+            if (path.isEmpty()) {
+                message = "There Is No Path Between " + src + " And " + dest;
+            }
+            else {
+                message = "The Distance Between " + src + " And " + dest + " Is:\n";
+                for (NodeData nodeData : path) {
+                    message += nodeData.getKey() + "->";
+                }
+            }
+            JOptionPane.showMessageDialog(new JFrame(), message, "Shortest Path", JOptionPane.DEFAULT_OPTION);
         }
         catch (Exception e) {
+            e.printStackTrace();
             String message = "Something Gets Wrong :(";
             JOptionPane.showMessageDialog(new JFrame(), message, "Erro", JOptionPane.ERROR_MESSAGE);
         }

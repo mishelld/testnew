@@ -4,24 +4,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import api.*;
 import codes.*;
 
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 public class MyDirectedWeightedGraphTest {
     DirectedWeightedGraph graph;
     DirectedWeightedGraphAlgorithmsImpl algoGraph;
 
-    MyDirectedWeightedGraphTest() {
+    MyDirectedWeightedGraphTest() throws IOException, ParseException {
         graph = Ex2.getGrapg("data/G1.json"); // enter here the path for G1 json
+
         algoGraph = new DirectedWeightedGraphAlgorithmsImpl();
         algoGraph.init(graph);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
         MyDirectedWeightedGraphTest test = new MyDirectedWeightedGraphTest();
         System.out.println(test.graph.nodeSize());
         System.out.println(test.algoGraph.isConnected());
         System.out.println(test.algoGraph.shortestPathDist(1,7));
-        System.out.println(test.algoGraph.shortestPath(0,10));
+        //System.out.println(test.algoGraph.shortestPath(0,10));
+        System.out.println(test.graph.getNode(3).getLocation().y());
+        System.out.println(test.graph.getEdge(3,4).getWeight());
+
+
+
 //        for (NodeData node:test.algoGraph.shortestPath(0,10)) {
 //            System.out.println(node.getKey());
 //        }
@@ -33,7 +42,7 @@ public class MyDirectedWeightedGraphTest {
 
     }
 //1
-     @Test
+     /*@Test
      void testConnect() {
          MyDirectedWeightedGraphTest test1 = new MyDirectedWeightedGraphTest();
          assertEquals(true, test1.algoGraph.isConnected());
@@ -54,7 +63,7 @@ public class MyDirectedWeightedGraphTest {
         assertEquals(8, test1.algoGraph.center().getKey());
 
     }
-    //3
+
     @Test
     void testShortestPath() {
         MyDirectedWeightedGraphTest test1 = new MyDirectedWeightedGraphTest();
@@ -112,9 +121,9 @@ public class MyDirectedWeightedGraphTest {
          test1.graph.removeNode(1);
          assertEquals(16, test1.graph.nodeSize());
 
-     }
+     }*/
     @Test
-    void all() {
+    void all() throws IOException, ParseException {
         MyDirectedWeightedGraphTest test1 = new MyDirectedWeightedGraphTest();
         assertEquals(true, test1.algoGraph.isConnected());
         MyDirectedWeightedGraphTest test2 = new MyDirectedWeightedGraphTest();
@@ -147,7 +156,9 @@ public class MyDirectedWeightedGraphTest {
 //9
         test1.graph.removeNode(1);
         assertEquals(16, test1.graph.nodeSize());
- //10
+
+
+        //10
         test1.graph.removeEdge(0,1);
         assertEquals(null, test1.graph.getEdge(0,1));
 

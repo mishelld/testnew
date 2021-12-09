@@ -1,17 +1,16 @@
 package gui;
 
-import api.DirectedWeightedGraph;
-//import api.NodeData;
+
 import api.DirectedWeightedGraphAlgorithms;
+import codes.Ex2;
 import gui.pop.*;
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.io.*;
-import java.awt.*;
 
-import java.awt.event.MouseListener;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class MyFrame extends JFrame implements ActionListener, MouseListener {
     private MyPanel panel;
@@ -26,30 +25,79 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
     private JMenuItem removeEdge;
     private JMenuItem nodeSize;
     private JMenuItem edgeSize;
-
+    
     private JMenu grapgAlgoOp;
-    private boolean needToAddNode = false;
+    private JMenuItem isConnected;
+    private JMenuItem shortestPathDist;
+    private JMenuItem shortestPath;
+    private JMenuItem center;
+    private JMenuItem tsp;//need to do
+    private JMenuItem save;
+    private JMenuItem load;
+    static JButton button;
+    static JButton button1;
+    static JButton button2;
+    static JButton button3;
+    static JButton button4;
+    static JButton button5;
 
+
+    private boolean needToAddNode = false;
     private DirectedWeightedGraphAlgorithms graphAlgo;
 
     public MyFrame(DirectedWeightedGraphAlgorithms ans) {
         super();
         graphAlgo = ans;
-
         panel = new MyPanel(ans.getGraph());
-        // this.setLayout(new BorderLayout());
-        buildBar();
-        this.add(panel);
+          test1();
+      //  buildBar();
+      // this.add(panel);
         this.addMouseListener(this);
         this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
     }
 
+    private void test1(){
+        button = new JButton("show graph G3");
+        button1 = new JButton("show graph G2");
+        button2 = new JButton("show graph G1");
+        button3 = new JButton("graphG1");
+        button4 = new JButton("graphG2");
+        button5 = new JButton("graphG3");
+
+
+
+        // addActionListener to button
+        button.addActionListener(this);
+        button1.addActionListener(this);
+        button2.addActionListener(this);
+        button3.addActionListener(this);
+        button4.addActionListener(this);
+        button5.addActionListener(this);
+
+
+
+        JPanel p = new JPanel();
+
+
+        p.add(button);
+        p.add(button1);
+        p.add(button2);
+        p.add(button3);
+        p.add(button4);
+        p.add(button5);
+
+
+        // add panel to frame
+        add(p);
+
+    }
+
+
     private void buildBar() {
         graphOp = new JMenu("Graph");
-        
         getNode = new JMenuItem("Get Node");
         getNode.addActionListener(this);
         getEdge = new JMenuItem("Get Edge");
@@ -67,6 +115,23 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
         edgeSize = new JMenuItem("Size Of Edges");
         edgeSize.addActionListener(this);
 
+        grapgAlgoOp = new JMenu("Algorithms");
+        isConnected = new JMenuItem("Is Connected");
+        isConnected.addActionListener(this);
+        shortestPathDist = new JMenuItem("Shortest Path Dist");
+        shortestPathDist.addActionListener(this);
+        shortestPath = new JMenuItem("Shortest Path");
+        shortestPath.addActionListener(this);
+        center = new JMenuItem("Center");
+        center.addActionListener(this);
+        tsp = new JMenuItem("TSP");
+        tsp.addActionListener(this);
+        save = new JMenuItem("Save");
+        save.addActionListener(this);
+        load = new JMenuItem("Load");
+        load.addActionListener(this);
+
+
         graphOp.add(getNode);
         graphOp.add(getEdge);
         graphOp.add(addNode);
@@ -75,8 +140,19 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
         graphOp.add(removeEdge);
         graphOp.add(nodeSize);
         graphOp.add(edgeSize);
+        
+        grapgAlgoOp.add(isConnected);
+        grapgAlgoOp.add(shortestPathDist);
+        grapgAlgoOp.add(shortestPath);
+        grapgAlgoOp.add(center);
+        grapgAlgoOp.add(tsp);
+        grapgAlgoOp.add(save);
+        grapgAlgoOp.add(load);
+
+
         mb = new JMenuBar();
         mb.add(graphOp);
+        mb.add(grapgAlgoOp);
         setJMenuBar(mb);
     }
 
@@ -90,7 +166,6 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
         }
         else if(e.getSource() == addNode) {
             needToAddNode = true;
-            //new AddNode(graphAlgo.getGraph(), panel, e.getX(),e.getY());
         }
         else if(e.getSource() == connect) {
             new Connect(graphAlgo.getGraph(), panel);
@@ -109,8 +184,64 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
             String message = "The Size Of The Edges In The Graph is: " + graphAlgo.getGraph().edgeSize();
             JOptionPane.showMessageDialog(new JFrame(), message, "Size Of Edges", JOptionPane.DEFAULT_OPTION);
         }
-        
+        else if(e.getSource() == isConnected) {
+            String message;
+            if(graphAlgo.isConnected()) {
+                message = "The Graph Is Connected :)";
+            }
+            else {
+                message = "The Graph Isn't Connected :(";
+            }
+            JOptionPane.showMessageDialog(new JFrame(), message, "Is The Graph Connected", JOptionPane.DEFAULT_OPTION);
+        }
+        else if(e.getSource() == shortestPathDist) {
+            new ShortestPathDist(graphAlgo);
+        }
+        else if(e.getSource() == shortestPath) {
+            new ShortestPath(graphAlgo);
+        }
+        else if(e.getSource() == center) {
+            String message = "The Center Node In The Graph is: " + graphAlgo.center().getKey();
+            JOptionPane.showMessageDialog(new JFrame(), message, "Center In Graph", JOptionPane.DEFAULT_OPTION);
+        }
+        else if(e.getSource() == tsp) {
+            new TSP(graphAlgo);
+        }
+        else if(e.getSource() == save) {
+            new Save(graphAlgo);
+        }
+        else if(e.getSource() == load) {
+            new Load(graphAlgo, panel);
+        }
+
+
+        String s = e.getActionCommand();
+        if (s.equals("show graph G3")) {
+            G3 m = new G3(graphAlgo);
+
+        }
+        else if(s.equals("show graph G2")){
+           G2 P = new G2(graphAlgo);
+
+        }
+        else if(s.equals("show graph G1")){
+            G1 m = new G1(graphAlgo);
+        }
+        else if(s.equals("graphG1")){
+            graphG1 m = new graphG1(Ex2.getGrapg("data/G1.json"));
+
+        }
+        else if(s.equals("graphG2")){
+            graphG2 m = new graphG2(Ex2.getGrapg("data/G2.json"));
+
+        }
+        else if(s.equals("graphG3")){
+            graphG3 m = new graphG3(Ex2.getGrapg("data/G3.json"));
+
+        }
+
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         if (needToAddNode) {
