@@ -310,9 +310,4 @@ public class DirectedWeightedGraphAlgorithmsImpl implements DirectedWeightedGrap
         return true;
     }
 
-
-    /*
-     * simple swap between two index
-     */
-
 }

@@ -1,12 +1,11 @@
 package gui;
 
-import api.DirectedWeightedGraph;
-import codes.Ex2;
-import gui.pop.*;
+import api.DirectedWeightedGraphAlgorithms;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class graphG2 extends JFrame implements ActionListener {
     static JFrame f1;
@@ -26,17 +25,16 @@ public class graphG2 extends JFrame implements ActionListener {
 
 
     static JLabel text;
-    private MyPanel panel;
+    private gui.panel panel;
 
-    private DirectedWeightedGraph graphAlgo;
+    private DirectedWeightedGraphAlgorithms graphAlgo;
 
-    graphG2(DirectedWeightedGraph ans){
+    graphG2(DirectedWeightedGraphAlgorithms ans){
         super();
         graphAlgo = ans;
-        panel = new MyPanel(ans);
-        panel.init(Ex2.getGrapgAlgo("data/G2.json").getGraph());
+        panel = new panel(ans.getGraph());
+        panel.init(graphAlgo.getGraph());
         panel.repaint();
-
         this.add(panel);
         this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,59 +99,51 @@ public class graphG2 extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
         if (s.equals("get node")) {
-            new GetNode(Ex2.getGrapg("data/G2.json"));
+            new giveNode(graphAlgo.getGraph());
         }
         else if(s.equals("get edge")){
-            new ShortestPathDist(Ex2.getGrapgAlgo("data/G2.json"));
+            new ShortestPathDistance(graphAlgo);
 
         } else if(s.equals("size of nodes")){
-            String message = "The Size Of The Nodes In The Graph is: " + Ex2.getGrapg("data/G2.json").nodeSize();
+            String message = "The Size Of The Nodes In The Graph is: " + graphAlgo.getGraph().nodeSize();
             JOptionPane.showMessageDialog(new JFrame(), message, "Size Of Nodes", JOptionPane.DEFAULT_OPTION);
 
 
         } else if(s.equals("size of edges")) {
-            String message = "The Size Of The Nodes In The Graph is: " + Ex2.getGrapg("data/G2.json").edgeSize();
+            String message = "The Size Of The Nodes In The Graph is: " + graphAlgo.getGraph().edgeSize();
             JOptionPane.showMessageDialog(new JFrame(), message, "Size Of Nodes", JOptionPane.DEFAULT_OPTION);
         }
         else if(s.equals("is graph connected")){
-            String message;
+            String m;
 
-            if(Ex2.getGrapgAlgo("data/G2.json").isConnected()) {
-                message = "The Graph Is Connected :)";
+            if(graphAlgo.isConnected()) {
+                m = "The graph is Connected";
             }
             else {
-                message = "The Graph Isn't Connected :(";
+                m = "The graph Isn't Connected ";
             }
-            JOptionPane.showMessageDialog(new JFrame(), message, "Is The Graph Connected", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(new JFrame(), m, "Connected", JOptionPane.DEFAULT_OPTION);
 
 
 
         }
         else if(s.equals("load graph")){
-            new Load(Ex2.getGrapgAlgo("data/G2.json"), panel);
+            new Loadthegraph(graphAlgo, panel);
         }
-        else if(s.equals("remove edge")){
-            new RemoveEdge(Ex2.getGrapg("data/G2.json"), panel);
 
-
-        }
-        else if(s.equals("remove node")){
-            new RemoveNode(Ex2.getGrapg("data/G2.json"), panel);
-
-        }
         else if(s.equals("save")){
-            new Save(Ex2.getGrapgAlgo("data/G2.json"));
+            new Savethegraph(graphAlgo);
         }
         else if(s.equals("shortest path")){
-            new ShortestPath(Ex2.getGrapgAlgo("data/G2.json"));
+            new ShortestPathgraph(graphAlgo);
 
         }
 
         else if(s.equals("shortest path dist")) {
-            new ShortestPathDist(Ex2.getGrapgAlgo("data/G2.json"));
+            new ShortestPathDistance(graphAlgo);
         }
         else if(s.equals("TSP")){
-            new TSP(Ex2.getGrapgAlgo("data/G2.json"));
+            new graphtsp(graphAlgo);
 
         }
     }

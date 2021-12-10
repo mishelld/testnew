@@ -1,7 +1,6 @@
 package gui.pop;
 
 import api.DirectedWeightedGraph;
-import gui.MyPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +16,11 @@ public class AddNode extends JFrame implements ActionListener {
     private JLabel textKey;
 
     private DirectedWeightedGraph graph;
-    private MyPanel panel;
+    private gui.panel panel;
     private int x, y;
 
     // default constructor
-    public AddNode(DirectedWeightedGraph graph, MyPanel panel, int x, int y) {
+    public AddNode(DirectedWeightedGraph graph, gui.panel panel, int x, int y) {
         // create a new frame to store text field and button
         super("Add Node");
         this.graph = graph;

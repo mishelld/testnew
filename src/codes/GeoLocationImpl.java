@@ -16,6 +16,12 @@ public class GeoLocationImpl implements GeoLocation {
         this.z = Double.parseDouble(arrOfStr[2]);
     }
 
+    public GeoLocationImpl(double x, double y, double z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     //copy constructor
     public GeoLocationImpl(GeoLocation other) {
         this.x = other.x();

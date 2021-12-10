@@ -1,7 +1,6 @@
 package codes;
 
 import api.*;
-import codes.*;
 import gui.*;
 
 import org.json.simple.JSONArray;
@@ -12,12 +11,6 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import java.util.HashMap;
-import java.util.Scanner;
 
 /**
  * This class is the main class for Ex2 - your implementation will be tested
@@ -70,7 +63,7 @@ public class Ex2 {
      */
     public static void runGUI(String json_file) {
         DirectedWeightedGraphAlgorithms graphAlgo = getGrapgAlgo(json_file);
-        new MyFrame(graphAlgo);
+        new frame(graphAlgo);
     }
 
     public static DirectedWeightedGraphImpl readGRaphFromJson(String json_file)
